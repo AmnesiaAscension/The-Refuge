@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,11 +196,8 @@
                 <div class="absolute inset-0 bg-gradient-to-tr from-[#40471a] to-transparent opacity-10 rounded-[2.5rem] transform rotate-3 scale-105"></div>
                 
                 <div class="relative h-[400px] lg:h-[550px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white group">
-                    <div id="hero-carousel" class="w-full h-full relative bg-gray-100">
-                        <!-- Images will be injected by JS -->
-                         <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-sm font-medium">
-                            Add images to heroImages array in script
-                        </div>
+                    <div id="hero-carousel" class="w-full h-full relative bg-gray-100 overflow-hidden">
+                        <!-- Slides injected by JS -->
                     </div>
                 </div>
             </div>
@@ -551,21 +549,33 @@
         });
 
         // --- Hero Carousel ---
-        // TODO: Add your image paths here (e.g., ["images/photo1.jpg", "images/photo2.jpg"])
-        const heroImages = []; 
+        const heroImages = [
+            "images/2man.jpg",
+            "images/2man2.jpg",
+            "images/4man.jpg",
+            "images/6man.jpg",
+            "images/6man2.jpg",
+            "images/bathroom1.jpg",
+            "images/bathroom2.jpg",
+            "images/bathroom3.jpg",
+            "images/bathroom4.jpg",
+            "images/dining.jpg",
+            "images/kitchen.jpg",
+            "images/livingroom.jpg"
+        ];
         let heroIndex = 0;
         const heroContainer = document.getElementById('hero-carousel');
 
-        if (heroImages.length > 0) {
-            heroContainer.innerHTML = ''; // Clear placeholder text
+        if (heroImages.length > 0 && heroContainer) {
+            heroContainer.innerHTML = ''; // Clear any placeholder
             
             // Setup images
             heroImages.forEach((src, idx) => {
                 const div = document.createElement('div');
                 div.className = `absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0'}`;
                 div.innerHTML = `
-                    <img src="${src}" class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-[3s]" alt="Hero Image">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                    <img src="${src}" class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-[3000ms]" alt="Hero Image ${idx + 1}">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                 `;
                 heroContainer.appendChild(div);
             });
@@ -698,16 +708,9 @@
             chatMessages.appendChild(typingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Call Gemini
             let responseText = "I'm sorry, I can't connect right now. Please call 281-309-6718.";
             
             try {
-                // NOTE: In a pure static file, we can't safely access process.env.API_KEY.
-                // This block is here to demonstrate where the logic goes.
-                // If you are hosting this yourself, you might hardcode the key (RISKY) or use a proxy.
-                // For this demo, we check if the key exists (e.g. injected by a previewer).
-                
-                // We'll try to find the key in a global or just mock it if missing.
                 const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : null;
 
                 if (apiKey) {
@@ -726,7 +729,6 @@
                     const result = await chat.sendMessage({ message: text });
                     responseText = result.text;
                 } else {
-                     // Mock response for static demo if no key
                      await new Promise(r => setTimeout(r, 1000));
                      responseText = "Thank you for your message! Since this is a static demo, I can't process live AI responses without an API key. Please call 281-309-6718 for real assistance.";
                 }
@@ -734,7 +736,6 @@
                 console.error(err);
             }
 
-            // Remove typing indicator
             const tEl = document.getElementById(typingId);
             if(tEl) tEl.remove();
 
@@ -745,3 +746,4 @@
     </script>
 </body>
 </html>
+```
