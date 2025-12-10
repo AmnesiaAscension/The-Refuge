@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Refuge Sober Home</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Gen AI SDK -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0"
+      }
+    }
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+      }
+      body {
+        font-family: 'Montserrat', sans-serif;
+      }
+      .font-script {
+        font-family: 'Great Vibes', cursive;
+      }
+      
+      /* Animations */
+      @keyframes slideUpFade {
+        0% { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(76, 122, 101, 0.4); }
+        50% { box-shadow: 0 0 20px 0 rgba(76, 122, 101, 0.7); }
+      }
+      @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+      @keyframes grid-pan {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+      }
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes scan-vertical {
+        0% { transform: translateY(-100%); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(100%); opacity: 0; }
+      }
+
+      .animate-slide-up { animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+      .animate-fade-in { animation: fadeIn 1.5s ease-out forwards; }
+      .animate-pulse-glow { animation: pulse-glow 3s infinite; }
+      .animate-blob { animation: blob 7s infinite; }
+      .animate-grid-pan { animation: grid-pan 20s linear infinite; }
+      .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+      .animate-scan { animation: scan-vertical 4s linear infinite; }
+      
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      
+      .selection-theme::selection {
+        background-color: #4c7a65;
+        color: white;
+      }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] overflow-x-hidden antialiased selection-theme">
+
+    <!-- Global Background -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div class="absolute top-[-10%] left-[-10%] w-full h-full opacity-20" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-4">
+                <div class="scale-75 origin-left sm:scale-90 md:scale-100 relative w-28 h-28 flex items-center justify-center transition-transform hover:scale-110 duration-500 cursor-pointer">
+                    <svg viewBox="0 0 200 200" class="w-full h-full text-[#383533]">
+                        <path d="M 170,100 A 70,70 0 1,1 100,30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-[#383533]"></path>
+                        <g class="translate-y-4">
+                            <text x="100" y="70" text-anchor="middle" class="font-script text-4xl fill-[#383533]">The</text>
+                            <text x="100" y="105" text-anchor="middle" class="text-4xl font-black tracking-[0.2em] fill-[#383533]" style="font-family: 'Montserrat', sans-serif">REFUGE</text>
+                            <text x="100" y="125" text-anchor="middle" class="text-[10px] tracking-widest font-bold fill-[#383533]">ESTD 2025</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8 animate-fade-in" style="animation-delay: 0.2s;">
+                <a href="#pricing" class="relative px-3 py-2 text-sm font-bold uppercase tracking-widest text-[#383533] hover:text-[#4c7a65] transition-colors group">
+                    Pricing
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-[#4c7a65] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="#amenities" class="relative px-3 py-2 text-sm font-bold uppercase tracking-widest text-[#383533] hover:text-[#4c7a65] transition-colors group">
+                    Amenities
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-[#4c7a65] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="#contact" class="relative px-3 py-2 text-sm font-bold uppercase tracking-widest text-[#383533] hover:text-[#4c7a65] transition-colors group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-[#4c7a65] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="tel:281-309-6718" class="ml-4 bg-[#4c7a65] text-white px-6 py-2.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-[#365848] transition-all transform hover:scale-105 shadow-md flex items-center gap-2">
+                    Book Tour <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Phone Button -->
+            <div class="md:hidden">
+                <a href="tel:281-309-6718" class="bg-[#4c7a65] p-3 rounded-full text-white shadow-lg flex items-center justify-center">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="relative pt-32 pb-16 lg:pt-48 lg:pb-32 px-6 overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 -z-10 overflow-hidden">
+            <div class="absolute inset-0 opacity-[0.03] animate-grid-pan" style="background-image: linear-gradient(#4c7a65 1px, transparent 1px), linear-gradient(90deg, #4c7a65 1px, transparent 1px); background-size: 40px 40px;"></div>
+            
+            <div class="absolute top-32 left-10 w-8 h-8 border-t-2 border-l-2 border-[#4c7a65]/30 hidden lg:block"></div>
+            <div class="absolute bottom-32 right-10 w-8 h-8 border-b-2 border-r-2 border-[#4c7a65]/30 hidden lg:block"></div>
+            <div class="absolute inset-0 w-full h-[2px] bg-[#4c7a65]/5 animate-scan"></div>
+            
+            <div class="absolute top-0 -left-4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+            <div class="absolute top-0 -right-4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-8 left-20 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 4s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 z-10 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-50 border border-emerald-100 text-[#4c7a65] font-bold text-xs sm:text-sm uppercase tracking-widest animate-slide-up shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Starting at $165/week
+                </div>
+                
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight text-[#383533] tracking-tight animate-slide-up" style="animation-delay: 0.1s;">
+                    Safe & Sober <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#4c7a65] to-[#365848]">Living Home</span>
+                </h1>
+
+                <p class="text-xl text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed animate-slide-up font-medium" style="animation-delay: 0.2s;">
+                    Located in Deer Park near The Wheelhouse. A modern, supportive environment to help you build a fresh new start.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 animate-slide-up" style="animation-delay: 0.3s;">
+                    <a href="tel:281-309-6718" class="w-full sm:w-auto bg-[#383533] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-black hover:scale-105 transition-all shadow-xl shadow-gray-400/20 flex items-center justify-center gap-3 group relative overflow-hidden">
+                        <span class="relative z-10 flex items-center gap-2">Book a Tour <i data-lucide="arrow-right" class="group-hover:translate-x-1 transition-transform"></i></span>
+                        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </a>
+                    <div class="flex items-center gap-2 text-gray-500 font-bold text-sm uppercase tracking-wide">
+                        <div class="bg-emerald-50 p-1 rounded-full">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#4c7a65]"></i>
+                        </div>
+                        <span>All utilities included</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Carousel -->
+            <div class="relative animate-fade-in lg:mt-10" style="animation-delay: 0.4s;">
+                <div class="absolute inset-0 bg-gradient-to-tr from-[#4c7a65] to-transparent opacity-10 rounded-[2.5rem] transform rotate-3 scale-105"></div>
+                
+                <div class="relative h-[400px] lg:h-[550px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white group">
+                    <div id="hero-carousel" class="w-full h-full relative">
+                        <!-- Images will be injected by JS -->
+                    </div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 glass-panel rounded-2xl p-6 flex items-center justify-between border-0 bg-white/90 z-20">
+                        <div>
+                            <p class="font-bold text-[#383533] flex items-center gap-2">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-[#4c7a65]"></i> Deer Park, TX
+                            </p>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1 pl-6">Walking Distance to Support</p>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="flex -space-x-3">
+                                <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200"></div>
+                                <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-300"></div>
+                                <div class="w-10 h-10 rounded-full border-2 border-white bg-[#4c7a65] flex items-center justify-center text-white text-xs font-bold">+10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="relative py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none -z-10">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-dashed border-[#4c7a65]/10 rounded-full animate-spin-slow"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#4c7a65]/5 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <h2 class="text-4xl lg:text-5xl font-black text-[#383533]">Transparent Weekly Rates</h2>
+                <p class="text-xl text-gray-500">Simple pricing. No hidden fees. Move-in ready.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 lg:gap-12 items-center">
+                <!-- Economy -->
+                <div class="bg-white text-gray-800 shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-2 z-0 opacity-90 hover:opacity-100 relative flex flex-col p-8 rounded-3xl transition-all duration-500 transform">
+                    <div class="mb-6 text-center border-b border-gray-100 pb-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest mb-2 text-[#4c7a65]">Economy</h3>
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-xl font-medium">$</span>
+                            <span class="text-6xl font-black tracking-tighter">165</span>
+                            <span class="text-sm font-medium text-gray-400">/wk</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">6 Man Room</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">Shared Bath</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">All Utilities</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">High Speed Wifi</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">Coffee Bar Access</span></li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 bg-[#383533] text-white hover:bg-black hover:shadow-lg">
+                        Select Room <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Standard -->
+                <div class="bg-[#4c7a65] text-white shadow-[0_20px_60px_-15px_rgba(76,122,101,0.5)] scale-105 z-10 ring-4 ring-white/50 lg:-mt-4 lg:-mb-4 relative flex flex-col p-8 rounded-3xl transition-all duration-500 transform">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-[#383533] text-white text-xs font-bold px-6 py-2 rounded-full uppercase tracking-wider shadow-lg flex items-center gap-2">
+                        <i data-lucide="star" class="w-3 h-3 fill-current text-yellow-400"></i> Most Popular
+                    </div>
+                    <div class="mb-6 text-center border-b border-white/10 pb-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest mb-2 text-emerald-200">Standard</h3>
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-xl font-medium">$</span>
+                            <span class="text-6xl font-black tracking-tighter">190</span>
+                            <span class="text-sm font-medium text-emerald-100">/wk</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-[#365848]"><i data-lucide="check" class="w-3 h-3 text-white"></i></div><span class="text-emerald-50">4 Man Room</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-[#365848]"><i data-lucide="check" class="w-3 h-3 text-white"></i></div><span class="text-emerald-50">Premium Bedding</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-[#365848]"><i data-lucide="check" class="w-3 h-3 text-white"></i></div><span class="text-emerald-50">All Utilities</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-[#365848]"><i data-lucide="check" class="w-3 h-3 text-white"></i></div><span class="text-emerald-50">High Speed Wifi</span></li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 bg-white text-[#4c7a65] hover:bg-emerald-50 shadow-lg">
+                        Select Room <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Premium -->
+                <div class="bg-white text-gray-800 shadow-xl border border-gray-100 hover:shadow-2xl hover:-translate-y-2 z-0 opacity-90 hover:opacity-100 relative flex flex-col p-8 rounded-3xl transition-all duration-500 transform">
+                    <div class="mb-6 text-center border-b border-gray-100 pb-6">
+                        <h3 class="text-sm font-bold uppercase tracking-widest mb-2 text-[#4c7a65]">Premium</h3>
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-xl font-medium">$</span>
+                            <span class="text-6xl font-black tracking-tighter">190</span>
+                            <span class="text-sm font-medium text-gray-400">/wk</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">2 Man Room</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">More Privacy</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">Desk Workspace</span></li>
+                        <li class="flex items-center gap-3 text-sm font-medium"><div class="rounded-full p-1 flex-shrink-0 bg-emerald-50"><i data-lucide="check" class="w-3 h-3 text-[#4c7a65]"></i></div><span class="text-gray-600">Premium Bedding</span></li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wide transition-all duration-300 transform active:scale-95 flex items-center justify-center gap-2 bg-[#383533] text-white hover:bg-black hover:shadow-lg">
+                        Select Room <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Grid -->
+    <section id="amenities" class="py-24 bg-[#2C2A28] text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-5 pointer-events-none">
+            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#4c7a65"></path>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="text-4xl lg:text-5xl font-black mb-4 tracking-tight">Premium Amenities</h2>
+                    <p class="text-gray-400 text-lg max-w-md">Everything you need for a comfortable, productive, and sober lifestyle.</p>
+                </div>
+                <a href="tel:281-309-6718" class="text-[#4c7a65] font-bold uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2 group">
+                    Schedule Visit <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <!-- Feature Cards -->
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="tv" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Living Room</h3>
+                    </div>
+                </div>
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden" style="animation-delay: 0.1s">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="wifi" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Internet</h3>
+                    </div>
+                </div>
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden" style="animation-delay: 0.2s">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="coffee" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Coffee Bar</h3>
+                    </div>
+                </div>
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden" style="animation-delay: 0.3s">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="chef-hat" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Kitchen</h3>
+                    </div>
+                </div>
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden" style="animation-delay: 0.4s">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="zap" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Utilities</h3>
+                    </div>
+                </div>
+                <div class="group relative p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-[#4c7a65] transition-all duration-300 transform hover:-translate-y-2 overflow-hidden" style="animation-delay: 0.5s">
+                    <div class="flex flex-col items-center text-center gap-4 relative z-10">
+                        <div class="p-4 bg-white/10 rounded-full group-hover:bg-white group-hover:text-[#4c7a65] text-white transition-colors duration-300">
+                            <i data-lucide="star" class="w-7 h-7" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-lg group-hover:tracking-wider transition-all duration-300">Comfort</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-[#383533] mb-4">Resident Stories</h2>
+                <p class="text-gray-500 text-lg">Real stories from men rebuilding their lives.</p>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <div class="absolute top-0 left-10 text-emerald-100 transform -translate-x-1/2 -translate-y-1/2">
+                    <i data-lucide="quote" class="w-[120px] h-[120px] opacity-20 rotate-180"></i>
+                </div>
+
+                <div class="relative bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] text-center">
+                    <div class="min-h-[200px] flex flex-col justify-center items-center">
+                        <div id="testimonial-container" class="animate-fade-in">
+                            <div class="mb-6 flex justify-center gap-1">
+                                <i data-lucide="star" class="w-5 h-5 fill-[#4c7a65] text-[#4c7a65]"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-[#4c7a65] text-[#4c7a65]"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-[#4c7a65] text-[#4c7a65]"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-[#4c7a65] text-[#4c7a65]"></i>
+                                <i data-lucide="star" class="w-5 h-5 fill-[#4c7a65] text-[#4c7a65]"></i>
+                            </div>
+                            <blockquote id="t-text" class="text-xl md:text-2xl font-medium text-gray-700 leading-relaxed mb-8">
+                                "The structure here saved my life. I found a brotherhood that actually understands what I'm going through."
+                            </blockquote>
+                            <div>
+                                <div id="t-name" class="font-bold text-[#383533] text-lg">Michael R.</div>
+                                <div id="t-recovery" class="text-[#4c7a65] font-medium text-sm uppercase tracking-wider">9 Months Sober</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-4 mt-8">
+                        <button id="t-prev" class="p-2 rounded-full hover:bg-emerald-50 text-gray-400 hover:text-[#4c7a65] transition-colors">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <div id="t-dots" class="flex gap-2">
+                            <!-- Dots injected by JS -->
+                        </div>
+                        <button id="t-next" class="p-2 rounded-full hover:bg-emerald-50 text-gray-400 hover:text-[#4c7a65] transition-colors">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="relative py-32 px-6 flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-[#4c7a65]"></div>
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="relative z-10 text-center space-y-8 max-w-4xl mx-auto">
+            <h2 class="text-5xl md:text-7xl font-black text-white leading-tight tracking-tight">
+                YOUR FRESH START <br/> BEGINS TODAY
+            </h2>
+            <p class="text-emerald-100 text-xl md:text-2xl font-light">
+                Join a community of brothers focused on recovery and growth.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 pt-8">
+                <a href="tel:281-309-6718" class="bg-white text-[#4c7a65] px-12 py-5 rounded-full font-black text-xl hover:bg-emerald-50 hover:scale-105 transition-all shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center gap-3">
+                    <i data-lucide="phone" class="w-6 h-6"></i>
+                    CALL 281-309-6718
+                </a>
+                <span class="text-white/80 font-medium tracking-wide border-b border-white/30 pb-0.5">Or text us anytime</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1816] text-gray-500 py-16 px-6 border-t border-gray-800 font-sans">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-white font-bold text-lg mb-4">The Refuge</h4>
+                <p class="text-sm leading-relaxed mb-6">A safe, structured, and supportive environment for men in recovery.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Navigation</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#home" class="hover:text-[#4c7a65] transition-colors">Home</a></li>
+                    <li><a href="#pricing" class="hover:text-[#4c7a65] transition-colors">Pricing</a></li>
+                    <li><a href="#amenities" class="hover:text-[#4c7a65] transition-colors">Amenities</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-4">Contact</h4>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5"></i> 281-309-6718</li>
+                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Deer Park, TX</li>
+                    <li class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 24/7 Intake</li>
+                </ul>
+            </div>
+            <div class="flex flex-col justify-between">
+                <div class="bg-[#2C2A28] p-4 rounded-xl border border-gray-800">
+                    <p class="text-xs text-center text-gray-400">"This house is built on the foundation of recovery."</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs">
+            <p>&copy; 2025 The Refuge Sober Home. All rights reserved.</p>
+            <div class="flex gap-4 mt-4 md:mt-0">
+                <span>Privacy Policy</span>
+                <span>Terms of Service</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky CTA -->
+    <a href="tel:281-309-6718" id="sticky-cta" class="fixed bottom-6 left-6 z-40 bg-white text-[#383533] px-6 py-4 rounded-full font-black shadow-2xl flex items-center gap-3 border border-gray-200 transition-all duration-500 transform hover:scale-105 hover:bg-[#4c7a65] hover:text-white hover:border-[#4c7a65] group translate-y-24 opacity-0">
+        <div class="bg-[#4c7a65] p-2 rounded-full text-white group-hover:bg-white group-hover:text-[#4c7a65] transition-colors">
+            <i data-lucide="calendar" class="w-4 h-4"></i>
+        </div>
+        <span class="uppercase tracking-wider text-sm">Book Tour</span>
+    </a>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+        <!-- Chat Window -->
+        <div id="chat-window" class="hidden mb-4 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col h-[500px] animate-slide-up origin-bottom-right">
+            <div class="bg-[#4c7a65] p-4 flex justify-between items-center text-white">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                            <i data-lucide="message-circle" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-[#4c7a65] rounded-full animate-pulse"></div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg leading-tight">The Refuge Assistant</h3>
+                        <p class="text-[10px] text-emerald-100 uppercase tracking-wider font-medium">Online</p>
+                    </div>
+                </div>
+                <button id="close-chat" class="hover:bg-[#365848] p-1 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+                <div class="flex justify-start animate-slide-up" style="animation-duration: 0.3s;">
+                    <div class="max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-gray-800 border border-gray-200 rounded-tl-none">
+                        Hi! I can answer questions about pricing, location, or amenities at The Refuge. How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <form id="chat-form" class="p-3 bg-white border-t border-gray-100 flex gap-2">
+                <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#4c7a65] focus:ring-1 focus:ring-[#4c7a65] text-sm" />
+                <button type="submit" id="chat-submit" class="bg-[#4c7a65] text-white p-2 rounded-full hover:bg-[#365848] disabled:opacity-50 transition-colors transform active:scale-95">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Toggle Button -->
+        <button id="toggle-chat" class="bg-[#4c7a65] hover:scale-105 text-white p-4 rounded-full shadow-lg hover:shadow-[#4c7a65]/40 transition-all duration-300 flex items-center gap-2">
+            <span id="toggle-icon-open"><i data-lucide="message-circle" class="w-6 h-6"></i></span>
+            <span id="toggle-icon-close" class="hidden"><i data-lucide="x" class="w-6 h-6"></i></span>
+            <span id="toggle-text" class="font-semibold hidden sm:inline px-1">Ask Questions</span>
+        </button>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module">
+        import { GoogleGenAI } from "@google/genai";
+
+        // --- Lucide Icons ---
+        lucide.createIcons();
+
+        // --- Sticky Navbar & CTA ---
+        const navbar = document.getElementById('navbar');
+        const stickyCta = document.getElementById('sticky-cta');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-panel', 'py-2', 'shadow-lg');
+                navbar.classList.remove('py-6');
+                stickyCta.classList.remove('translate-y-24', 'opacity-0');
+            } else {
+                navbar.classList.remove('glass-panel', 'py-2', 'shadow-lg');
+                navbar.classList.add('py-6');
+                stickyCta.classList.add('translate-y-24', 'opacity-0');
+            }
+        });
+
+        // --- Hero Carousel ---
+        const heroImages = [
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1584622050111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+        ];
+        let heroIndex = 0;
+        const heroContainer = document.getElementById('hero-carousel');
+
+        // Setup images
+        heroImages.forEach((src, idx) => {
+            const div = document.createElement('div');
+            div.className = `absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100' : 'opacity-0'}`;
+            div.innerHTML = `
+                <img src="${src}" class="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-[3s]" alt="Hero Image">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+            `;
+            heroContainer.appendChild(div);
+        });
+
+        setInterval(() => {
+            heroIndex = (heroIndex + 1) % heroImages.length;
+            Array.from(heroContainer.children).forEach((child, idx) => {
+                if(idx === heroIndex) child.classList.replace('opacity-0', 'opacity-100');
+                else child.classList.replace('opacity-100', 'opacity-0');
+            });
+        }, 4000);
+
+        // --- Testimonials Carousel ---
+        const testimonials = [
+            { name: "Michael R.", recovery: "9 Months Sober", text: "The structure here saved my life. I found a brotherhood that actually understands what I'm going through. It's not just a place to sleep, it's a place to heal." },
+            { name: "James T.", recovery: "1 Year Sober", text: "I've been to three other sober homes, and The Refuge is by far the cleanest and most supportive. The management really cares about your success." },
+            { name: "David L.", recovery: "6 Months Sober", text: "The location is perfect—close to meetings and work. Being around guys who are serious about their recovery pushed me to be better every single day." }
+        ];
+        let tIndex = 0;
+        const tText = document.getElementById('t-text');
+        const tName = document.getElementById('t-name');
+        const tRecovery = document.getElementById('t-recovery');
+        const tDots = document.getElementById('t-dots');
+        const tContainer = document.getElementById('testimonial-container');
+
+        function updateTestimonial() {
+            // Fade out
+            tContainer.classList.remove('animate-fade-in');
+            void tContainer.offsetWidth; // Trigger reflow
+            tContainer.classList.add('animate-fade-in');
+
+            const t = testimonials[tIndex];
+            tText.textContent = `"${t.text}"`;
+            tName.textContent = t.name;
+            tRecovery.textContent = t.recovery;
+
+            // Update dots
+            tDots.innerHTML = '';
+            testimonials.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === tIndex ? 'bg-[#4c7a65] w-6' : 'bg-gray-200 hover:bg-gray-300'}`;
+                dot.onclick = () => { tIndex = idx; updateTestimonial(); resetTimer(); };
+                tDots.appendChild(dot);
+            });
+        }
+
+        let tTimer = setInterval(() => { tIndex = (tIndex + 1) % testimonials.length; updateTestimonial(); }, 10000);
+        function resetTimer() { clearInterval(tTimer); tTimer = setInterval(() => { tIndex = (tIndex + 1) % testimonials.length; updateTestimonial(); }, 10000); }
+
+        document.getElementById('t-prev').onclick = () => { tIndex = (tIndex - 1 + testimonials.length) % testimonials.length; updateTestimonial(); resetTimer(); };
+        document.getElementById('t-next').onclick = () => { tIndex = (tIndex + 1) % testimonials.length; updateTestimonial(); resetTimer(); };
+        
+        updateTestimonial();
+
+        // --- Chat Widget Logic ---
+        const chatWindow = document.getElementById('chat-window');
+        const toggleChat = document.getElementById('toggle-chat');
+        const closeChat = document.getElementById('close-chat');
+        const iconOpen = document.getElementById('toggle-icon-open');
+        const iconClose = document.getElementById('toggle-icon-close');
+        const toggleText = document.getElementById('toggle-text');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        
+        let isChatOpen = false;
+        let chatHistory = [{ role: 'model', text: 'Hi! I can answer questions about pricing, location, or amenities at The Refuge. How can I help you today?' }];
+
+        function setChatState(isOpen) {
+            isChatOpen = isOpen;
+            if (isOpen) {
+                chatWindow.classList.remove('hidden');
+                toggleChat.classList.add('bg-gray-700', 'rotate-90');
+                toggleChat.classList.remove('bg-[#4c7a65]');
+                iconOpen.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+                toggleText.classList.add('hidden');
+            } else {
+                chatWindow.classList.add('hidden');
+                toggleChat.classList.remove('bg-gray-700', 'rotate-90');
+                toggleChat.classList.add('bg-[#4c7a65]');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+                toggleText.classList.remove('hidden');
+            }
+        }
+
+        toggleChat.onclick = () => setChatState(!isChatOpen);
+        closeChat.onclick = () => setChatState(false);
+
+        function addMessage(role, text) {
+            const div = document.createElement('div');
+            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`;
+            div.style.animationDuration = '0.3s';
+            
+            const bubble = document.createElement('div');
+            bubble.className = `max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                role === 'user' 
+                ? 'bg-[#4c7a65] text-white rounded-tr-none' 
+                : 'bg-white text-gray-800 border border-gray-200 rounded-tl-none'
+            }`;
+            bubble.textContent = text;
+            
+            div.appendChild(bubble);
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage('user', text);
+            chatInput.value = '';
+            chatHistory.push({ role: 'user', text });
+
+            // Show typing indicator
+            const typingId = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.className = 'flex justify-start animate-fade-in';
+            typingDiv.innerHTML = `
+                <div class="bg-white px-4 py-3 rounded-2xl rounded-tl-none border border-gray-200 shadow-sm flex items-center gap-1">
+                  <div class="w-2 h-2 bg-[#4c7a65] rounded-full animate-bounce" style="animation-delay:-0.3s"></div>
+                  <div class="w-2 h-2 bg-[#4c7a65] rounded-full animate-bounce" style="animation-delay:-0.15s"></div>
+                  <div class="w-2 h-2 bg-[#4c7a65] rounded-full animate-bounce"></div>
+                </div>`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Call Gemini
+            let responseText = "I'm sorry, I can't connect right now. Please call 281-309-6718.";
+            
+            try {
+                // NOTE: In a pure static file, we can't safely access process.env.API_KEY.
+                // This block is here to demonstrate where the logic goes.
+                // If you are hosting this yourself, you might hardcode the key (RISKY) or use a proxy.
+                // For this demo, we check if the key exists (e.g. injected by a previewer).
+                
+                // We'll try to find the key in a global or just mock it if missing.
+                const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : null;
+
+                if (apiKey) {
+                    const ai = new GoogleGenAI({ apiKey: apiKey });
+                    const SYSTEM_INSTRUCTION = `You are a helpful assistant for "The Refuge Sober Home" in Deer Park. 
+                    Pricing: 2-man/4-man $190/wk, 6-man $165/wk. All utilities included. 
+                    Contact: 281-309-6718. 
+                    Tone: Encouraging, professional.`;
+                    
+                    const chat = ai.chats.create({
+                        model: 'gemini-2.5-flash',
+                        config: { systemInstruction: SYSTEM_INSTRUCTION },
+                        history: chatHistory.map(h => ({ role: h.role, parts: [{ text: h.text }] })).slice(0, -1)
+                    });
+
+                    const result = await chat.sendMessage({ message: text });
+                    responseText = result.text;
+                } else {
+                     // Mock response for static demo if no key
+                     await new Promise(r => setTimeout(r, 1000));
+                     responseText = "Thank you for your message! Since this is a static demo, I can't process live AI responses without an API key. Please call 281-309-6718 for real assistance.";
+                }
+            } catch (err) {
+                console.error(err);
+            }
+
+            // Remove typing indicator
+            const tEl = document.getElementById(typingId);
+            if(tEl) tEl.remove();
+
+            addMessage('model', responseText);
+            chatHistory.push({ role: 'model', text: responseText });
+        };
+
+    </script>
+</body>
+</html>
