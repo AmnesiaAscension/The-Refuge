@@ -11,14 +11,6 @@
     
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.31.0"
-      }
-    }
-    </script>
-
     <style>
       html {
         scroll-behavior: smooth;
@@ -135,7 +127,7 @@
 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 animate-slide-up" style="animation-delay: 0.3s;">
                     <a href="tel:281-309-6718" class="w-full sm:w-auto bg-[#383533] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-black hover:scale-105 transition-all shadow-xl shadow-gray-400/20 flex items-center justify-center gap-3 group relative overflow-hidden">
-                        <span class="relative z-10 flex items-center gap-2">Book a Tour <i data-lucide="arrow-right" class="group-hover:translate-x-1 transition-transform"></i></span>
+                        <span class="relative z-10 flex items-center gap-2">Get in Touch <i data-lucide="arrow-right" class="group-hover:translate-x-1 transition-transform"></i></span>
                         <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </a>
                     <div class="flex items-center gap-2 text-gray-500 font-bold text-sm uppercase tracking-wide">
@@ -433,52 +425,43 @@
         <span class="uppercase tracking-wider text-sm">Book Tour</span>
     </a>
 
-    <div id="chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
-        <div id="chat-window" class="hidden mb-4 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col h-[500px] animate-slide-up origin-bottom-right">
-            <div class="bg-[#5a5f36] p-4 flex justify-between items-center text-white">
-                <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <div class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
-                            <i data-lucide="message-circle" class="w-4 h-4 text-white"></i>
-                        </div>
-                        <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#606930] border-2 border-[#5a5f36] rounded-full animate-pulse"></div>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg leading-tight">The Refuge Assistant</h3>
-                        <p class="text-[10px] text-[#eef0e6] uppercase tracking-wider font-medium">Online</p>
-                    </div>
+    <button id="donate-btn" class="fixed bottom-6 right-6 z-50 bg-[#5a5f36] hover:bg-[#3d4023] text-white px-6 py-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3 font-bold uppercase tracking-wide">
+        <i data-lucide="heart" class="w-5 h-5 fill-white animate-pulse"></i>
+        Donate Now
+    </button>
+
+    <div id="donate-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center px-4">
+        <div id="donate-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0"></div>
+
+        <div id="donate-content" class="relative bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl transform scale-95 opacity-0 transition-all duration-300 text-center">
+            <button id="close-donate" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="mb-6">
+                <div class="w-16 h-16 bg-[#5a5f36]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="heart" class="w-8 h-8 text-[#5a5f36] fill-[#5a5f36]"></i>
                 </div>
-                <button id="close-chat" class="hover:bg-[#3d4023] p-1 rounded-full transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <h3 class="text-2xl font-black text-[#383533] mb-2">Support Our Mission</h3>
+                <p class="text-gray-500 text-sm">Scan to donate via Zelle</p>
             </div>
 
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
-                <div class="flex justify-start animate-slide-up" style="animation-duration: 0.3s;">
-                    <div class="max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-gray-800 border border-gray-200 rounded-tl-none">
-                        Hi! I can answer questions about pricing, location, or amenities at The Refuge. How can I help you today?
-                    </div>
-                </div>
+            <div class="bg-white p-4 rounded-2xl border-2 border-dashed border-gray-200 mb-6 flex items-center justify-center aspect-square overflow-hidden relative">
+                 <img src="images/zelle-qr.jpg" alt="Zelle QR Code" class="w-full h-full object-contain relative z-10">
+                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs text-center z-0 p-4">
+                    Make sure to add 'zelle-qr.jpg' to your images folder
+                 </div>
             </div>
 
-            <form id="chat-form" class="p-3 bg-white border-t border-gray-100 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#5a5f36] focus:ring-1 focus:ring-[#5a5f36] text-sm" />
-                <button type="submit" id="chat-submit" class="bg-[#5a5f36] text-white p-2 rounded-full hover:bg-[#3d4023] disabled:opacity-50 transition-colors transform active:scale-95">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-            </form>
+            <div class="bg-gray-50 p-4 rounded-xl text-left">
+                 <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Zelle Recipient</p>
+                 <p class="font-bold text-[#383533] text-lg">The Refuge Sober Home</p>
+                 <p class="text-sm text-gray-500">281-309-6718</p>
+            </div>
         </div>
-
-        <button id="toggle-chat" class="bg-[#5a5f36] hover:scale-105 text-white p-4 rounded-full shadow-lg hover:shadow-[#5a5f36]/40 transition-all duration-300 flex items-center gap-2">
-            <span id="toggle-icon-open"><i data-lucide="message-circle" class="w-6 h-6"></i></span>
-            <span id="toggle-icon-close" class="hidden"><i data-lucide="x" class="w-6 h-6"></i></span>
-            <span id="toggle-text" class="font-semibold hidden sm:inline px-1">Ask Questions</span>
-        </button>
     </div>
 
-    <script type="module">
-        import { GoogleGenAI } from "@google/genai";
-
+    <script>
         // --- Lucide Icons ---
         lucide.createIcons();
 
@@ -581,117 +564,35 @@
         
         updateTestimonial();
 
-        // --- Chat Widget Logic ---
-        const chatWindow = document.getElementById('chat-window');
-        const toggleChat = document.getElementById('toggle-chat');
-        const closeChat = document.getElementById('close-chat');
-        const iconOpen = document.getElementById('toggle-icon-open');
-        const iconClose = document.getElementById('toggle-icon-close');
-        const toggleText = document.getElementById('toggle-text');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        
-        let isChatOpen = false;
-        let chatHistory = [{ role: 'model', text: 'Hi! I can answer questions about pricing, location, or amenities at The Refuge. How can I help you today?' }];
+        // --- Donate Modal Logic ---
+        const donateBtn = document.getElementById('donate-btn');
+        const donateModal = document.getElementById('donate-modal');
+        const donateOverlay = document.getElementById('donate-overlay');
+        const donateContent = document.getElementById('donate-content');
+        const closeDonate = document.getElementById('close-donate');
 
-        function setChatState(isOpen) {
-            isChatOpen = isOpen;
-            if (isOpen) {
-                chatWindow.classList.remove('hidden');
-                toggleChat.classList.add('bg-gray-700', 'rotate-90');
-                toggleChat.classList.remove('bg-[#5a5f36]');
-                iconOpen.classList.add('hidden');
-                iconClose.classList.remove('hidden');
-                toggleText.classList.add('hidden');
-            } else {
-                chatWindow.classList.add('hidden');
-                toggleChat.classList.remove('bg-gray-700', 'rotate-90');
-                toggleChat.classList.add('bg-[#5a5f36]');
-                iconOpen.classList.remove('hidden');
-                iconClose.classList.add('hidden');
-                toggleText.classList.remove('hidden');
-            }
+        function openDonate() {
+            donateModal.classList.remove('hidden');
+            // Small timeout to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                donateOverlay.classList.remove('opacity-0');
+                donateContent.classList.remove('scale-95', 'opacity-0');
+                donateContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
         }
 
-        toggleChat.onclick = () => setChatState(!isChatOpen);
-        closeChat.onclick = () => setChatState(false);
-
-        function addMessage(role, text) {
-            const div = document.createElement('div');
-            div.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`;
-            div.style.animationDuration = '0.3s';
-            
-            const bubble = document.createElement('div');
-            bubble.className = `max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
-                role === 'user' 
-                ? 'bg-[#5a5f36] text-white rounded-tr-none' 
-                : 'bg-white text-gray-800 border border-gray-200 rounded-tl-none'
-            }`;
-            bubble.textContent = text;
-            
-            div.appendChild(bubble);
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+        function closeDonateModal() {
+            donateOverlay.classList.add('opacity-0');
+            donateContent.classList.remove('scale-100', 'opacity-100');
+            donateContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                donateModal.classList.add('hidden');
+            }, 300); // Wait for transition
         }
 
-        chatForm.onsubmit = async (e) => {
-            e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text) return;
-
-            addMessage('user', text);
-            chatInput.value = '';
-            chatHistory.push({ role: 'user', text });
-
-            // Show typing indicator
-            const typingId = 'typing-' + Date.now();
-            const typingDiv = document.createElement('div');
-            typingDiv.id = typingId;
-            typingDiv.className = 'flex justify-start animate-fade-in';
-            typingDiv.innerHTML = `
-                <div class="bg-white px-4 py-3 rounded-2xl rounded-tl-none border border-gray-200 shadow-sm flex items-center gap-1">
-                  <div class="w-2 h-2 bg-[#5a5f36] rounded-full animate-bounce" style="animation-delay:-0.3s"></div>
-                  <div class="w-2 h-2 bg-[#5a5f36] rounded-full animate-bounce" style="animation-delay:-0.15s"></div>
-                  <div class="w-2 h-2 bg-[#5a5f36] rounded-full animate-bounce"></div>
-                </div>`;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            let responseText = "I'm sorry, I can't connect right now. Please call 281-309-6718.";
-            
-            try {
-                const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : null;
-
-                if (apiKey) {
-                    const ai = new GoogleGenAI({ apiKey: apiKey });
-                    const SYSTEM_INSTRUCTION = `You are a helpful assistant for "The Refuge Sober Home" in Deer Park. 
-                    Pricing: 2-man/4-man $190/wk, 6-man $165/wk. All utilities included. 
-                    Contact: 281-309-6718. 
-                    Tone: Encouraging, professional.`;
-                    
-                    const chat = ai.chats.create({
-                        model: 'gemini-2.5-flash',
-                        config: { systemInstruction: SYSTEM_INSTRUCTION },
-                        history: chatHistory.map(h => ({ role: h.role, parts: [{ text: h.text }] })).slice(0, -1)
-                    });
-
-                    const result = await chat.sendMessage({ message: text });
-                    responseText = result.text;
-                } else {
-                     await new Promise(r => setTimeout(r, 1000));
-                     responseText = "Thank you for your message! Since this is a static demo, I can't process live AI responses without an API key. Please call 281-309-6718 for real assistance.";
-                }
-            } catch (err) {
-                console.error(err);
-            }
-
-            const tEl = document.getElementById(typingId);
-            if(tEl) tEl.remove();
-
-            addMessage('model', responseText);
-            chatHistory.push({ role: 'model', text: responseText });
-        };
+        donateBtn.addEventListener('click', openDonate);
+        closeDonate.addEventListener('click', closeDonateModal);
+        donateOverlay.addEventListener('click', closeDonateModal);
 
     </script>
 </body>
