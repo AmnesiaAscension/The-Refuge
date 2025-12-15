@@ -1,3 +1,8 @@
+Here is the complete code. I have updated the **Logo**, **Sticky CTA**, and **Donate Button** to be significantly smaller and more compact on mobile devices, while remaining large and visible on desktop screens.
+
+You can copy and paste this entire block.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,59 +80,59 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 100px;
-      }
-      body {
-        font-family: 'Montserrat', sans-serif;
-      }
-      .font-script {
-        font-family: 'Great Vibes', cursive;
-      }
-      
-      /* Animations */
-      @keyframes slideUpFade {
-        0% { opacity: 0; transform: translateY(40px); }
-        100% { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-      }
-      @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(90, 95, 54, 0.4); }
-        50% { box-shadow: 0 0 20px 0 rgba(90, 95, 54, 0.7); }
-      }
-      @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .font-script {
+            font-family: 'Great Vibes', cursive;
+        }
+        
+        /* Animations */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(90, 95, 54, 0.4); }
+            50% { box-shadow: 0 0 20px 0 rgba(90, 95, 54, 0.7); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-      .animate-slide-up { animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-      .animate-fade-in { animation: fadeIn 1.5s ease-out forwards; }
-      .animate-pulse-glow { animation: pulse-glow 3s infinite; }
-      .animate-spin-slow { animation: spin-slow 20s linear infinite; }
-      
-      .glass-panel {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-      }
-      
-      .selection-theme::selection {
-        background-color: #5a5f36;
-        color: white;
-      }
+        .animate-slide-up { animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .animate-fade-in { animation: fadeIn 1.5s ease-out forwards; }
+        .animate-pulse-glow { animation: pulse-glow 3s infinite; }
+        .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .selection-theme::selection {
+            background-color: #5a5f36;
+            color: white;
+        }
     </style>
 </head>
 <body class="bg-[#F8FAFC] overflow-x-hidden antialiased selection-theme">
 
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6" role="navigation" aria-label="Main Navigation">
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4 md:py-6" role="navigation" aria-label="Main Navigation">
   <div class="max-w-7xl mx-auto px-6 flex items-center">
     <div class="flex items-center gap-4">
-      <div class="scale-100 origin-left sm:scale-110 md:scale-125 relative w-36 h-36 flex items-center justify-center transition-transform hover:scale-135 duration-500 cursor-pointer">
+      <div class="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 flex items-center justify-center transition-transform hover:scale-105 duration-500 cursor-pointer origin-left">
         <img
           src="images/logo.jpeg"
           alt="The Refuge Sober Home Logo - Deer Park, Texas"
@@ -140,7 +145,7 @@
 
     <div class="hidden md:flex items-center gap-8 ml-auto animate-fade-in" style="animation-delay: 0.2s;">
       <a href="#pricing" class="relative px-3 py-2 text-sm font-bold uppercase tracking-widest text-[#383533] hover:text-[#5a5f36] transition-colors group">
-    Pricing
+        Pricing
         <span class="absolute bottom-0 left-0 w-full h-0.5 bg-[#5a5f36] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
       </a>
       <a href="#amenities" class="relative px-3 py-2 text-sm font-bold uppercase tracking-widest text-[#383533] hover:text-[#5a5f36] transition-colors group">
@@ -157,8 +162,8 @@
     </div>
 
     <div class="md:hidden ml-auto">
-      <a href="tel:281-309-6718" class="bg-[#5a5f36] p-3 rounded-full text-white shadow-lg flex items-center justify-center" aria-label="Call Now">
-        <i data-lucide="phone" class="w-5 h-5" aria-hidden="true"></i>
+      <a href="tel:281-309-6718" class="bg-[#5a5f36] p-2.5 rounded-full text-white shadow-lg flex items-center justify-center" aria-label="Call Now">
+        <i data-lucide="phone" class="w-4 h-4" aria-hidden="true"></i>
       </a>
     </div>
   </div>
@@ -522,16 +527,16 @@
         </div>
     </footer>
 
-    <a href="tel:281-309-6718" id="sticky-cta" class="fixed bottom-6 left-6 z-40 bg-white text-[#383533] px-6 py-4 rounded-full font-black shadow-2xl flex items-center gap-3 border border-gray-200 transition-all duration-500 transform hover:scale-105 hover:bg-[#5a5f36] hover:text-white hover:border-[#5a5f36] group translate-y-24 opacity-0" aria-label="Get in Touch">
-        <div class="bg-[#5a5f36] p-2 rounded-full text-white group-hover:bg-white group-hover:text-[#5a5f36] transition-colors">
-            <i data-lucide="calendar" class="w-4 h-4" aria-hidden="true"></i>
+    <a href="tel:281-309-6718" id="sticky-cta" class="fixed bottom-4 left-4 z-40 bg-white text-[#383533] px-4 py-3 md:px-6 md:py-4 rounded-full font-black shadow-2xl flex items-center gap-2 md:gap-3 border border-gray-200 transition-all duration-500 transform hover:scale-105 hover:bg-[#5a5f36] hover:text-white hover:border-[#5a5f36] group translate-y-24 opacity-0" aria-label="Get in Touch">
+        <div class="bg-[#5a5f36] p-1.5 md:p-2 rounded-full text-white group-hover:bg-white group-hover:text-[#5a5f36] transition-colors">
+            <i data-lucide="calendar" class="w-3 h-3 md:w-4 md:h-4" aria-hidden="true"></i>
         </div>
-        <span class="uppercase tracking-wider text-sm">Get in Touch</span>
+        <span class="uppercase tracking-wider text-xs md:text-sm">Get in Touch</span>
     </a>
 
-    <button id="donate-btn" class="fixed bottom-6 right-6 z-50 bg-[#5a5f36] hover:bg-[#3d4023] text-white px-6 py-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3 font-bold uppercase tracking-wide" aria-label="Donate Now">
-        <i data-lucide="heart" class="w-5 h-5 fill-white animate-pulse" aria-hidden="true"></i>
-        Donate Now
+    <button id="donate-btn" class="fixed bottom-4 right-4 z-50 bg-[#5a5f36] hover:bg-[#3d4023] text-white px-4 py-3 md:px-6 md:py-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2 md:gap-3 font-bold uppercase tracking-wide text-xs md:text-base" aria-label="Donate Now">
+        <i data-lucide="heart" class="w-4 h-4 md:w-5 md:h-5 fill-white animate-pulse" aria-hidden="true"></i>
+        Donate<span class="hidden sm:inline">&nbsp;Now</span>
     </button>
 
     <div id="donate-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center px-4" role="dialog" aria-modal="true" aria-labelledby="donate-title">
@@ -576,11 +581,11 @@
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('glass-panel', 'py-2', 'shadow-lg');
-                navbar.classList.remove('py-6');
+                navbar.classList.remove('md:py-6', 'py-4');
                 stickyCta.classList.remove('translate-y-24', 'opacity-0');
             } else {
                 navbar.classList.remove('glass-panel', 'py-2', 'shadow-lg');
-                navbar.classList.add('py-6');
+                navbar.classList.add('md:py-6', 'py-4');
                 stickyCta.classList.add('translate-y-24', 'opacity-0');
             }
         });
@@ -709,3 +714,4 @@
     </script>
 </body>
 </html>
+```
