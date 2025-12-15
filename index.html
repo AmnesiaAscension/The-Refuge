@@ -49,6 +49,36 @@
         "https://www.facebook.com/YOUR_PAGE_LINK",
         "https://www.instagram.com/YOUR_PROFILE_LINK"
       ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "3",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Michael R." },
+          "datePublished": "2024-01-15",
+          "reviewBody": "The structure here saved my life. I found a brotherhood that actually understands what I'm going through. It's not just a place to sleep, it's a place to heal.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "James T." },
+          "datePublished": "2023-11-20",
+          "reviewBody": "I've been to three other sober homes, and The Refuge is by far the cleanest and most supportive. The management really cares about your success.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "David L." },
+          "datePublished": "2024-02-01",
+          "reviewBody": "The location is perfect—close to meetings and work. Being around guys who are serious about their recovery pushed me to be better every single day.",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+        }
+      ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Sober Living Room Tiers",
@@ -97,6 +127,27 @@
           }
         ]
       }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://therefugesoberliving.com/#service",
+      "name": "Men's Sober Living Recovery Program",
+      "serviceType": "Residential Recovery Housing",
+      "provider": { "@id": "https://therefugesoberliving.com/#entity" },
+      "areaServed": { "@id": "https://therefugesoberliving.com/#entity" },
+      "description": "A structured 12-step based living environment offering peer support, accountability, and community reintegration."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://therefugesoberliving.com/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://therefugesoberliving.com/"
+        }
+      ]
     },
     {
       "@type": "WebSite",
